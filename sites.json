@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Acme Store",
+    "url": "https://acme-store.com",
+    "consumerKey": "ck_your_woo_key_here",
+    "consumerSecret": "cs_your_woo_secret_here",
+    "maxHoursWithoutOrders": 24
+  },
+  {
+    "id": 2,
+    "name": "Bob's Goods",
+    "url": "https://bobs-goods.com",
+    "consumerKey": "ck_your_woo_key_here",
+    "consumerSecret": "cs_your_woo_secret_here",
+    "maxHoursWithoutOrders": 12
+  }
+]
