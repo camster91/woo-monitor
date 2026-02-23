@@ -4,7 +4,22 @@ const cors = require("cors");
 const nodemailer = require("nodemailer");
 const cron = require("node-cron");
 const WooCommerceRestApi = require("@woocommerce/woocommerce-rest-api").default;
-const sites = require("./sites.json");
+const fs = require("fs");
+
+// Load sites configuration
+let sites = [];
+try {
+    if (fs.existsSync("./sites.json")) {
+        sites = require("./sites.json");
+        console.log(`Loaded ${sites.length} site(s) from sites.json`);
+    } else {
+        console.warn("⚠️  sites.json not found. Backend health checks will be disabled.");
+        console.log("To enable backend monitoring, create sites.json with your WooCommerce API credentials.");
+    }
+} catch (error) {
+    console.error("Error loading sites.json:", error.message);
+    console.log("Backend health checks disabled due to configuration error.");
+}
 
 const app = express();
 app.use(cors());
@@ -51,20 +66,56 @@ async function sendAlert(subject, message) {
 // ==========================================
 app.post("/api/track-woo-error", async (req, res) => {
   const { site, url, type, error_message, time } = req.body;
+  
+  // Validate required fields
+  if (!site || !type || !error_message) {
+    console.warn(`[Frontend Error] Invalid request: missing required fields`, req.body);
+    return res.status(400).json({ 
+      success: false, 
+      error: "Missing required fields: site, type, error_message" 
+    });
+  }
+  
   console.log(`[Frontend Error] Site: ${site} | Type: ${type}`);
   
   const subject = `Frontend Issue on ${site}: ${type}`;
-  const message = `A customer just hit a frontend issue!\nSite: ${site}\nURL: ${url}\nError Type: ${type}\nError Message: ${error_message}\nTime: ${time}`;
+  const message = `A customer just hit a frontend issue!\nSite: ${site}\nURL: ${url || 'Unknown'}\nError Type: ${type}\nError Message: ${error_message}\nTime: ${time || new Date().toISOString()}`;
 
-  await sendAlert(subject, message);
-  res.status(200).json({ success: true });
+  try {
+    await sendAlert(subject, message);
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.error(`[Frontend Error] Failed to send alert:`, error.message);
+    res.status(500).json({ success: false, error: "Failed to process error alert" });
+  }
+});
+
+// Health check endpoint
+app.get("/api/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    timestamp: new Date().toISOString(),
+    version: "1.0.0",
+    features: {
+      frontend_monitoring: true,
+      backend_health_checks: sites.length > 0,
+      email_alerts: !!process.env.SMTP_HOST && process.env.SMTP_HOST !== "smtp.gmail.com",
+      sites_monitored: sites.length
+    }
+  });
 });
 
 // ==========================================
 // 3. THE "DEEP HEALTH" WOOCOMMERCE MONITOR
 // ==========================================
 async function checkWooCommerceAPI() {
-  console.log(`[Cron] Starting Deep Health checks for ${sites.length} sites...`);
+  if (sites.length === 0) {
+    console.log(`[Cron] No sites configured in sites.json. Skipping backend health checks.`);
+    console.log(`To monitor WooCommerce backend health, add your stores to sites.json with API keys.`);
+    return;
+  }
+  
+  console.log(`[Cron] Starting Deep Health checks for ${sites.length} site(s)...`);
 
   for (const site of sites) {
     try {
