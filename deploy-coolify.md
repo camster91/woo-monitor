@@ -5,7 +5,7 @@
 1. **Coolify Dashboard Access**: http://187.77.26.99:8000
 2. **API Token**: `2|OyUt8feqoaBUVu1Uvvkq59CCqNjIdj4j2Vf0OXYf`
 3. **GitHub Repository**: https://github.com/camster91/woo-monitor
-4. **ashbi.ca Domain Access**: For creating subdomain (monitor.ashbi.ca)
+4. **ashbi.ca Domain Access**: For creating subdomain (woo.ashbi.ca)
 
 ## Deployment Options
 
@@ -71,13 +71,13 @@ Add the following environment variables in Coolify:
 
 ### 4. Configure Domain & SSL
 
-1. **Domain**: `monitor.ashbi.ca`
+1. **Domain**: `woo.ashbi.ca`
 2. **SSL**: Enable (Coolify/Traefik will auto-configure Let's Encrypt)
 3. **HTTPS Redirect**: Enable
 
 **DNS Configuration** (in Cloudflare):
 ```
-monitor.ashbi.ca → A record → 187.77.26.99
+woo.ashbi.ca → A record → 187.77.26.99
 ```
 
 ### 5. Deploy Application
@@ -90,7 +90,7 @@ monitor.ashbi.ca → A record → 187.77.26.99
 
 ### 1. Check Application Health
 ```bash
-curl https://monitor.ashbi.ca/api/health
+curl https://woo.ashbi.ca/api/health
 ```
 Expected response:
 ```json
@@ -119,7 +119,7 @@ docker exec -it <container_id> node test-email.js
 
 ### 3. Test Webhook Endpoint
 ```bash
-curl -X POST https://monitor.ashbi.ca/api/track-woo-error \
+curl -X POST https://woo.ashbi.ca/api/track-woo-error \
   -H "Content-Type: application/json" \
   -d '{
     "site": "test-store.com",
@@ -291,7 +291,7 @@ For persistent error storage, consider adding:
 - **Storage**: ~500MB (including Docker layers)
 
 ### Domain Cost:
-- `monitor.ashbi.ca` (subdomain of existing domain)
+- `woo.ashbi.ca` (subdomain of existing domain)
 - SSL certificates: Free (Let's Encrypt)
 
 ## Next Steps After Deployment
@@ -307,7 +307,7 @@ For persistent error storage, consider adding:
 ### Quick Checks:
 ```bash
 # Application status
-curl -s https://monitor.ashbi.ca/api/health
+curl -s https://woo.ashbi.ca/api/health
 
 # Container status
 ssh root@187.77.26.99 "docker ps | grep woo-monitor"

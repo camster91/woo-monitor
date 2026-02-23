@@ -55,7 +55,7 @@ ALERT_EMAIL=cameron@ashbi.ca
 4. Build Pack: Dockerfile
 5. Port: 3000
 6. Add environment variables (copy from .env)
-7. Domain: `monitor.ashbi.ca`
+7. Domain: `woo.ashbi.ca`
 8. Click "Save & Deploy"
 
 **Detailed instructions**: See `deploy-coolify.md`
@@ -63,13 +63,13 @@ ALERT_EMAIL=cameron@ashbi.ca
 #### 3. Verify Deployment
 ```bash
 # Test health endpoint
-curl https://monitor.ashbi.ca/api/health
+curl https://woo.ashbi.ca/api/health
 
 # Test email
 ssh root@187.77.26.99 "docker exec <container_id> node test-email.js"
 
 # Test webhook
-curl -X POST https://monitor.ashbi.ca/api/track-woo-error \
+curl -X POST https://woo.ashbi.ca/api/track-woo-error \
   -H "Content-Type: application/json" \
   -d '{"site":"test.com","type":"test","error_message":"test"}'
 ```
@@ -134,7 +134,7 @@ git push -u origin main
 
 ### Configuration:
 1. Go to Settings → WooCommerce Monitor
-2. Set **Monitoring Server URL**: `https://monitor.ashbi.ca/api/track-woo-error`
+2. Set **Monitoring Server URL**: `https://woo.ashbi.ca/api/track-woo-error`
 3. Configure tracking options (all enabled by default)
 4. Save settings
 
@@ -200,7 +200,7 @@ ssh root@187.77.26.99 "docker logs coolify-application-* | grep -A5 -B5 '\[Cron\
 
 ### Test 3: Health Endpoint
 ```bash
-curl https://monitor.ashbi.ca/api/health | python -m json.tool
+curl https://woo.ashbi.ca/api/health | python -m json.tool
 ```
 
 ## Part 6: Maintenance & Monitoring
@@ -271,7 +271,7 @@ echo ""
 echo "3. Configuration needed:"
 echo "   - ashbi.ca SMTP password in .env"
 echo "   - WooCommerce API keys in sites.json"
-echo "   - Plugin webhook URL: https://monitor.ashbi.ca/api/track-woo-error"
+echo "   - Plugin webhook URL: https://woo.ashbi.ca/api/track-woo-error"
 ```
 
 ### Health Check Script:
@@ -281,7 +281,7 @@ Save as `check-woomonitor.sh`:
 # Health check for WooMonitor
 
 echo "Checking WooMonitor health..."
-curl -s https://monitor.ashbi.ca/api/health | python -c "
+curl -s https://woo.ashbi.ca/api/health | python -c "
 import sys, json
 try:
     data = json.load(sys.stdin)
@@ -324,7 +324,7 @@ except:
 - **Coolify Dashboard**: http://187.77.26.99:8000
 - **GitHub Server**: https://github.com/camster91/woo-monitor
 - **GitHub Plugin**: https://github.com/camster91/woo-monitor-plugin (to be created)
-- **Health Endpoint**: https://monitor.ashbi.ca/api/health
+- **Health Endpoint**: https://woo.ashbi.ca/api/health
 
 ### Contact:
 - **Email**: cameron@ashbi.ca
@@ -335,7 +335,7 @@ except:
 
 ### Deployment Complete When:
 - [ ] Node.js server deployed to Coolify
-- [ ] `monitor.ashbi.ca` accessible with SSL
+- [ ] `woo.ashbi.ca` accessible with SSL
 - [ ] Email alerts working (test with test-email.js)
 - [ ] WordPress plugin installed on at least 1 store
 - [ ] Error tracking functional (trigger test error)

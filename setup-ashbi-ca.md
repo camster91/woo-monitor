@@ -25,7 +25,7 @@ The system consists of:
 4. Install dependencies: `npm install`
 5. Configure environment
 6. Start with PM2: `pm2 start server.js --name woo-monitor`
-7. Set up domain `monitor.ashbi.ca` to point to this server
+7. Set up domain `woo.ashbi.ca` to point to this server
 
 ### Option C: Use Coolify (if you have Coolify installed)
 1. Create new application in Coolify
@@ -117,14 +117,14 @@ Edit `sites.json` in the `woo-monitor` directory:
 2. Upload to WordPress: Plugins → Add New → Upload Plugin
 3. Activate the plugin
 4. Go to Settings → WooCommerce Monitor
-5. Set Monitoring Server URL: `https://monitor.ashbi.ca/api/track-woo-error`
+5. Set Monitoring Server URL: `https://woo.ashbi.ca/api/track-woo-error`
    (Replace with your actual server URL)
 6. Configure tracking options
 7. Save settings
 
 ### Or use the original plugin:
 1. Edit `woo-monitor-plugin/woo-monitor.php`
-2. Change the webhook URL: `https://monitor.ashbi.ca/api/track-woo-error`
+2. Change the webhook URL: `https://woo.ashbi.ca/api/track-woo-error`
 3. Zip the file: `woo-monitor.php`
 4. Upload to WordPress
 
@@ -190,7 +190,7 @@ This should send a test error to your server.
 3. Check browser console for CORS errors
 4. Test with curl:
    ```bash
-   curl -X POST https://monitor.ashbi.ca/api/track-woo-error \
+   curl -X POST https://woo.ashbi.ca/api/track-woo-error \
      -H "Content-Type: application/json" \
      -d '{"site":"test.com","url":"https://test.com","type":"test","error_message":"test","time":"2024-01-01T00:00:00Z"}'
    ```

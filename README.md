@@ -65,7 +65,7 @@ This system has two components:
    ```php
    define('WOO_MONITOR_WEBHOOK_URL', 'https://YOUR_SERVER_URL/api/track-woo-error');
    ```
-   Replace `YOUR_SERVER_URL` with your Node.js server URL (e.g., `https://monitor.ashbi.ca`)
+   Replace `YOUR_SERVER_URL` with your Node.js server URL (e.g., `https://woo.ashbi.ca`)
 
 5. Re-zip the plugin if you modified it locally before uploading
 
@@ -118,7 +118,7 @@ ALERT_EMAIL=cameron@ashbi.ca
 
 ### Option A: Single Server (Simplest)
 - Deploy Node.js server on same server as ashbi.ca website
-- Use subdomain like `monitor.ashbi.ca`
+- Use subdomain like `woo.ashbi.ca`
 - Configure reverse proxy (Nginx/Apache) to forward to port 3000
 
 ### Option B: Separate Monitoring Server
