@@ -30,7 +30,8 @@ app.use(express.json());
 // ==========================================
 async function sendAlert(subject, message) {
   // Fallback: If SMTP is not configured in .env, just log it to the console.
-  if (!process.env.SMTP_HOST || process.env.SMTP_HOST === "smtp.gmail.com") {
+  if (!process.env.SMTP_HOST || process.env.SMTP_HOST.includes('example') || 
+      (process.env.SMTP_HOST === "smtp.gmail.com" && process.env.SMTP_USER === "your_alert_email@gmail.com")) {
     console.log("\n" + "=".repeat(50));
     console.log(`🔕 [MOCKED ALERT - EMAIL NOT CONFIGURED]`);
     console.log(`SUBJECT: ${subject}`);
