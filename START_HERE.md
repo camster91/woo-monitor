@@ -1,12 +1,17 @@
 # 🚀 WooMonitor - Start Here
 
+> **⚠️ IMPORTANT**: Old Coolify application deleted. You must create a new application via Coolify dashboard.
+> - **Patched plugin** (version 1.1.1) ready with all bug fixes
+> - **DNS** already configured (`woo.ashbi.ca` → `187.77.26.99`)
+> - **SMTP password** required for email alerts
+
 ## Quick Start for woo.ashbi.ca Deployment
 
 ### 🎯 What's Ready:
-1. **Node.js Monitoring Server** - Complete, Dockerized, ready for Coolify
-2. **WordPress Plugin** - Improved version with admin settings
-3. **Documentation** - Step-by-step deployment guides
-4. **Test Scripts** - Verify everything works
+1. **Node.js Monitoring Server** - Complete, Dockerized, ready for Coolify (✅ GitHub updated)
+2. **WordPress Plugin** - **Patched version 1.1.1** with all critical bugs fixed
+3. **Documentation** - Step-by-step deployment guides (✅ Updated)
+4. **Test Scripts** - Verify everything works (✅ Updated)
 
 ### 📁 Key Files:
 
@@ -17,9 +22,9 @@
 - `sites.json` - Configure WooCommerce stores to monitor
 
 #### WordPress Plugin - Install on stores:
-- `../woo-monitor-plugin-improved/woo-monitor-plugin.zip` - Ready to upload
-- `woo-monitor.php` - Main plugin file
-- `admin/admin-settings.php` - Admin interface
+- `../woo-monitor-plugin-patched/woo-monitor-patched.zip` - **Patched version 1.1.1** (✅ All bugs fixed)
+- `woo-monitor.php` - Main plugin file with timeout handling
+- **Bug fixes included**: Enabled checks, tracking options, 5-second timeout
 
 ### 🚀 Deployment Steps (30 minutes):
 
@@ -42,12 +47,14 @@
 1. Add A record: `woo` → `187.77.26.99`
 2. Wait for SSL certificate (auto via Let's Encrypt)
 
-#### Step 4: Install WordPress Plugin
-1. Upload `woo-monitor-plugin.zip` to WordPress
+#### Step 4: Install WordPress Plugin (✅ Use Patched Version)
+1. Upload `woo-monitor-patched.zip` to WordPress (version 1.1.1)
 2. Activate plugin
 3. Settings → WooCommerce Monitor
 4. Webhook URL: `https://woo.ashbi.ca/api/track-woo-error`
-5. Save settings
+5. Configure tracking options (recommended: all enabled)
+6. Save settings
+7. **Verify bug fixes**: Enabled checkbox works, timeout handling
 
 #### Step 5: Configure Stores
 1. Get WooCommerce API keys (Read permission)
